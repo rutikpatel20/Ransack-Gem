@@ -2,6 +2,10 @@
   <div class="flex-column">
     <div class="d-flex justify-content-between align-items-center mt-5">
       <h1> Books </h1>
+      <%= search_form_for(@query, url: books_path, method: :get, class:"d-flex") do |f| %>
+        <%= f.search_field :book_name_or_genre_or_author_name_or_summary_i_cont_any, placeholder: "Search...", class: "form-control me-2" %>
+        <%= f.submit "Search!", class: "btn btn-dark" %>
+      <% end %>
       <%= button_to "Add New Book", new_book_path, method: :get ,class:"btn-warning border-0 rounded shadow p-3 m-3" %>
     </div>
     <!--Error Message-->
@@ -12,6 +16,9 @@
     <% end %>
     <!-- Book Table -->
     <div>
+      <% if params[:q].present? %>
+        <h1 class="text-center"><%= pluralize(@books.count, "Result") %></h1>
+      <% end %>
       <table class="table table-info table-striped">
         <ol class="fs-2">
           <thead class="table-secondary">
