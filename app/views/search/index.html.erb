@@ -1,0 +1,30 @@
+<div class="container">
+  <h1 class="text-center"><%= pluralize(@books.count, "Result Found") %></h1>
+  <%= render 'search/form' %>
+  <div>
+    <table class="table table-info table-striped">
+      <ol class="fs-2">
+        <thead class="table-secondary">
+          <td class="text-center"> <%= sort_link(@query, :book_name, "Name", default_order: :asc) %> </td>
+          <td class="text-center"> Genre </td>
+          <td class="text-center"> Author </td>
+          <td class="text-center"> Summary </td>
+          <td class="text-center"> Price </td>
+          <td colspan=3 class="text-center"> Action </td>
+        </thead>
+        <% @books.each do |book| %>
+          <tr>
+            <td class="text-center"> <%= link_to book.book_name, book_path(book) %> </td>
+            <td class="text-center"> <%= book.genre %> </td>
+            <td class="text-center"> <%= book.author_name %> </td>
+            <td class="text-center"> <%= book.summary.truncate_words(10) %> </td>
+            <td class="text-center"> <%= book.price %> </td>
+            <td class="text-center"><%= button_to "Show",book_path(book),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
+            <td class="text-center"><%= button_to "Edit",edit_book_path(book),method: :get, class:"btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
+            <td class="text-center"><%= button_to "Delete",book_path(book),method: :delete, class:"btn-danger border-0 rounded-pill shadow px-3 py-2" %></td>
+          </tr>
+        <% end %>
+      </ol>
+    </table>
+  </div>
+</div>
